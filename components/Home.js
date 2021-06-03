@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import categoriesData from '../assets/data/categoriesData';
@@ -79,7 +78,13 @@ const Home = () => {
       <View style={styles.popularWrapper}>
         <Text style={styles.popularTitle}>Popular</Text>
         {popularData.map(item => (
-          <View style={styles.popularCartWrapper}>
+          <View
+            style={[
+              styles.popularCartWrapper,
+              {
+                marginTop: item.id == 1 ? 10 : 20,
+              },
+            ]}>
             <View>
               <View>
                 <View style={styles.popularToWrapper}>
@@ -89,6 +94,27 @@ const Home = () => {
                     color={colors.primary}
                   />
                   <Text style={styles.popularToText}>Top of the week</Text>
+                </View>
+                {/* <!--Break--> */}
+                <View style={styles.popularTitleWrapper}>
+                  <Text style={styles.popularTitlesTitle}>{item.title}</Text>
+                  <Text style={styles.popularTitlesWeight}>
+                    Weight {item.weight}
+                  </Text>
+                </View>
+                {/* <!--Break--> */}
+                <View style={styles.popularCartButton}>
+                  <View style={styles.addPizzaButton}>
+                    <Feather name="plus" size={10} color={colors.textDark} />
+                  </View>
+                  <View style={styles.ratingWrapper}>
+                    <MaterialCommunityIcons
+                      name="star"
+                      size={10}
+                      color={colors.textDark}
+                    />
+                    <Text style={styles.rating}>{item.rating}</Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -199,13 +225,56 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  popularCartWrapper: {
+    backgroundColor: colors.white,
+    borderRadius: 25,
+    paddingTop: 20,
+    paddingLeft: 20,
+    flexDirection: 'row',
+  },
   popularToWrapper: {
-      flexDirection: 'row',
-      alignItems:'center'
-
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   popularToText: {
-      marginLeft:10
+    marginLeft: 10,
+    fontSize: 14,
+  },
+  popularTitleWrapper: {
+    marginTop: 20,
+  },
+  popularTitlesTitle: {
+    fontSize: 14,
+    color: colors.textDark,
+  },
+  popularTitlesWeight: {
+    fontSize: 12,
+    color: colors.textLight,
+    marginTop: 5,
+  },
+  popularCartButton: {
+      flexDirection:'row',
+      alignItems:'center',
+      marginTop:10,
+      marginLeft:-20
+  },
+  addPizzaButton: {
+      backgroundColor:colors.primary,
+      paddingHorizontal:40,
+      paddingVertical:20,
+      borderTopRightRadius:25,
+      borderBottomLeftRadius:25,
+
+  },
+  ratingWrapper: {
+      flexDirection:'row',
+      alignItems:'center',
+      marginLeft:20
+  },
+  rating: {
+      color:colors.textDark,
+      fontSize:12,
+      marginLeft:5
   },
 });
 export default Home;
