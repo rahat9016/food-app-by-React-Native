@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import categoriesData from '../assets/data/categoriesData';
 import popularData from '../assets/data/popularData';
 import colors from '../assets/colors/color';
-import {FlatList} from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 const Home = () => {
-  const renderCategoriesItem = ({item}) => {
+  const renderCategoriesItem = ({ item }) => {
     return (
       <View
         style={[
@@ -75,7 +75,53 @@ const Home = () => {
         </View>
       </View>
       {/* {Popular} */}
-      
+      <View style={styles.popularWrapper}>
+        <Text style={styles.popularTitle}>Popular</Text>
+        {popularData.map(item => (
+          <View
+            style={[
+              styles.popularCartWrapper,
+              {
+                marginTop: item.id == 1 ? 10 : 20,
+              },
+            ]}>
+            <View>
+              <View>
+                <View style={styles.popularToWrapper}>
+                  <MaterialCommunityIcons
+                    name="crown"
+                    size={14}
+                    color={colors.primary}
+                  />
+                  <Text style={styles.popularToText}>Top of the week</Text>
+                </View>
+                {/* <!--Break--> */}
+                <View style={styles.popularTitleWrapper}>
+                  <Text style={styles.popularTitlesTitle}>{item.title}</Text>
+                  <Text style={styles.popularTitlesWeight}>
+                    Weight {item.weight}
+                  </Text>
+                </View>
+                {/* <!--Break--> */}
+                <View style={styles.popularCartButton}>
+                  <View style={styles.addPizzaButton}>
+                    <Feather name="plus" size={10} color={colors.textDark} />
+                  </View>
+                  <View style={styles.ratingWrapper}>
+                    <MaterialCommunityIcons
+                      name="star"
+                      size={10}
+                      color={colors.textDark}
+                    />
+                    <Text style={styles.rating}>{item.rating}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
+
     </View>
   );
 };
@@ -208,28 +254,28 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   popularCartButton: {
-      flexDirection:'row',
-      alignItems:'center',
-      marginTop:10,
-      marginLeft:-20
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    marginLeft: -20
   },
   addPizzaButton: {
-      backgroundColor:colors.primary,
-      paddingHorizontal:40,
-      paddingVertical:20,
-      borderTopRightRadius:25,
-      borderBottomLeftRadius:25,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 40,
+    paddingVertical: 20,
+    borderTopRightRadius: 25,
+    borderBottomLeftRadius: 25,
 
   },
   ratingWrapper: {
-      flexDirection:'row',
-      alignItems:'center',
-      marginLeft:20
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20
   },
   rating: {
-      color:colors.textDark,
-      fontSize:12,
-      marginLeft:5
+    color: colors.textDark,
+    fontSize: 12,
+    marginLeft: 5
   },
 });
 export default Home;
