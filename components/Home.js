@@ -75,52 +75,7 @@ const Home = () => {
         </View>
       </View>
       {/* {Popular} */}
-      <View style={styles.popularWrapper}>
-        <Text style={styles.popularTitle}>Popular</Text>
-        {popularData.map(item => (
-          <View
-            style={[
-              styles.popularCartWrapper,
-              {
-                marginTop: item.id == 1 ? 10 : 20,
-              },
-            ]}>
-            <View>
-              <View>
-                <View style={styles.popularToWrapper}>
-                  <MaterialCommunityIcons
-                    name="crown"
-                    size={14}
-                    color={colors.primary}
-                  />
-                  <Text style={styles.popularToText}>Top of the week</Text>
-                </View>
-                {/* <!--Break--> */}
-                <View style={styles.popularTitleWrapper}>
-                  <Text style={styles.popularTitlesTitle}>{item.title}</Text>
-                  <Text style={styles.popularTitlesWeight}>
-                    Weight {item.weight}
-                  </Text>
-                </View>
-                {/* <!--Break--> */}
-                <View style={styles.popularCartButton}>
-                  <View style={styles.addPizzaButton}>
-                    <Feather name="plus" size={10} color={colors.textDark} />
-                  </View>
-                  <View style={styles.ratingWrapper}>
-                    <MaterialCommunityIcons
-                      name="star"
-                      size={10}
-                      color={colors.textDark}
-                    />
-                    <Text style={styles.rating}>{item.rating}</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        ))}
-      </View>
+      
     </View>
   );
 };
