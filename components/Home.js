@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, Image, ScrollView} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import categoriesData from '../assets/data/categoriesData';
 import popularData from '../assets/data/popularData';
 import colors from '../assets/colors/color';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 const Home = () => {
-  const renderCategoriesItem = ({ item }) => {
+  const renderCategoriesItem = ({item}) => {
     return (
       <View
         style={[
@@ -39,6 +39,7 @@ const Home = () => {
   };
   return (
     <View style={styles.container}>
+      <ScrollView contentInsetAdjustmentBehavior='automatic' showsVerticalScrollIndicator={false}>
       {/* {header} */}
       <SafeAreaView>
         <View style={styles.headerWrapper}>
@@ -118,10 +119,13 @@ const Home = () => {
                 </View>
               </View>
             </View>
+            <View style={styles.popularCartRight}>
+              <Image source={item.image} style={styles.popularCartImage} />
+            </View>
           </View>
         ))}
       </View>
-
+    </ScrollView>
     </View>
   );
 };
@@ -194,6 +198,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     marginRight: 20,
     borderRadius: 20,
+    shadowColor: colors.black,
+    shadowOffset:{
+      width:0,
+      height:2
+    },
+    shadowOpacity:0.05,
+    shadowRadius:10,
+    elevation:2
   },
   categoryItemImage: {
     width: 60,
@@ -232,6 +244,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 20,
     flexDirection: 'row',
+    overflow: 'hidden',
+    shadowColor: colors.black,
+    shadowOffset:{
+      width:0,
+      height:2
+    },
+    shadowOpacity:0.05,
+    shadowRadius:10,
+    elevation:2
   },
   popularToWrapper: {
     flexDirection: 'row',
@@ -257,7 +278,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
-    marginLeft: -20
+    marginLeft: -20,
   },
   addPizzaButton: {
     backgroundColor: colors.primary,
@@ -265,17 +286,24 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopRightRadius: 25,
     borderBottomLeftRadius: 25,
-
   },
   ratingWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20
+    marginLeft: 20,
   },
   rating: {
     color: colors.textDark,
     fontSize: 12,
-    marginLeft: 5
+    marginLeft: 5,
+  },
+  popularCartRight: {
+    marginLeft: 5,
+  },
+  popularCartImage: {
+    width: 210,
+    height: 125,
+    resizeMode: 'contain',
   },
 });
 export default Home;
