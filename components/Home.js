@@ -1,15 +1,24 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import categoriesData from '../assets/data/categoriesData';
 import popularData from '../assets/data/popularData';
 import colors from '../assets/colors/color';
 import {FlatList} from 'react-native-gesture-handler';
-const Home = () => {
+const Home = ({navigation}) => {
   const renderCategoriesItem = ({item}) => {
     return (
       <View
+        key={item.id}
         style={[
           styles.categoryItemWrapper,
           {
@@ -39,93 +48,111 @@ const Home = () => {
   };
   return (
     <View style={styles.container}>
-      <ScrollView contentInsetAdjustmentBehavior='automatic' showsVerticalScrollIndicator={false}>
-      {/* {header} */}
-      <SafeAreaView>
-        <View style={styles.headerWrapper}>
-          <Image
-            width="50"
-            source={require('../assets/images/profile.png')}
-            style={styles.profileImage}
-          />
-          <Feather name="menu" size={24} color={colors.background} />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}>
+        {/* {header} */}
+        <SafeAreaView>
+          <View style={styles.headerWrapper}>
+            <Image
+              width="50"
+              source={require('../assets/images/profile.png')}
+              style={styles.profileImage}
+            />
+            <Feather name="menu" size={24} color={colors.background} />
+          </View>
+        </SafeAreaView>
+        {/* {Title} */}
+        <View style={styles.titlesWrappers}>
+          <Text style={styles.titleSubtitle}>Food</Text>
+          <Text style={styles.titlesTitle}>Delivery</Text>
         </View>
-      </SafeAreaView>
-      {/* {Title} */}
-      <View style={styles.titlesWrappers}>
-        <Text style={styles.titleSubtitle}>Food</Text>
-        <Text style={styles.titlesTitle}>Delivery</Text>
-      </View>
-      {/* {Search} */}
-      <View style={styles.searchWrapper}>
-        <Feather name="search" size={24} color={colors.textDark} />
-        <View style={styles.search}>
-          <Text style={styles.searchText}>Search</Text>
+        {/* {Search} */}
+        <View style={styles.searchWrapper}>
+          <Feather name="search" size={24} color={colors.textDark} />
+          <View style={styles.search}>
+            <Text style={styles.searchText}>Search</Text>
+          </View>
         </View>
-      </View>
-      {/* {categories} */}
-      <View style={styles.categoriesWrapper}>
-        <Text style={styles.categoriesTitle}>Categories</Text>
-        <View style={styles.categoriesListWrapper}>
-          <FlatList
-            data={categoriesData}
-            renderItem={renderCategoriesItem}
-            keyExtractor={item => item.id}
-            horizontal={true}
-          />
+        {/* {categories} */}
+        <View style={styles.categoriesWrapper}>
+          <Text style={styles.categoriesTitle}>Categories</Text>
+          <View style={styles.categoriesListWrapper}>
+            <FlatList
+              data={categoriesData}
+              renderItem={renderCategoriesItem}
+              keyExtractor={item => item.id}
+              horizontal={true}
+            />
+          </View>
         </View>
-      </View>
-      {/* {Popular} */}
-      <View style={styles.popularWrapper}>
-        <Text style={styles.popularTitle}>Popular</Text>
-        {popularData.map(item => (
-          <View
-            style={[
-              styles.popularCartWrapper,
-              {
-                marginTop: item.id == 1 ? 10 : 20,
-              },
-            ]}>
-            <View>
-              <View>
-                <View style={styles.popularToWrapper}>
-                  <MaterialCommunityIcons
-                    name="crown"
-                    size={14}
-                    color={colors.primary}
-                  />
-                  <Text style={styles.popularToText}>Top of the week</Text>
-                </View>
-                {/* <!--Break--> */}
-                <View style={styles.popularTitleWrapper}>
-                  <Text style={styles.popularTitlesTitle}>{item.title}</Text>
-                  <Text style={styles.popularTitlesWeight}>
-                    Weight {item.weight}
-                  </Text>
-                </View>
-                {/* <!--Break--> */}
-                <View style={styles.popularCartButton}>
-                  <View style={styles.addPizzaButton}>
-                    <Feather name="plus" size={10} color={colors.textDark} />
+        {/* {Popular} */}
+        <View style={styles.popularWrapper}>
+          <Text style={styles.popularTitle}>Popular</Text>
+          {popularData.map(item => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  item: item,
+                })
+              }>
+              <View
+                key={item.id}
+                style={[
+                  styles.popularCartWrapper,
+                  {
+                    marginTop: item.id == 1 ? 10 : 20,
+                  },
+                ]}>
+                <View>
+                  <View>
+                    <View style={styles.popularToWrapper}>
+                      <MaterialCommunityIcons
+                        name="crown"
+                        size={14}
+                        color={colors.primary}
+                      />
+                      <Text style={styles.popularToText}>Top of the week</Text>
+                    </View>
+                    {/* <!--Break--> */}
+                    <View style={styles.popularTitleWrapper}>
+                      <Text style={styles.popularTitlesTitle}>
+                        {item.title}
+                      </Text>
+                      <Text style={styles.popularTitlesWeight}>
+                        Weight {item.weight}
+                      </Text>
+                    </View>
+                    {/* <!--Break--> */}
+                    <View style={styles.popularCartButton}>
+                      <View style={styles.addPizzaButton}>
+                        <Feather
+                          name="plus"
+                          size={10}
+                          color={colors.textDark}
+                        />
+                      </View>
+                      <View style={styles.ratingWrapper}>
+                        <MaterialCommunityIcons
+                          name="star"
+                          size={10}
+                          color={colors.textDark}
+                        />
+                        <Text style={styles.rating}>{item.rating}</Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={styles.ratingWrapper}>
-                    <MaterialCommunityIcons
-                      name="star"
-                      size={10}
-                      color={colors.textDark}
-                    />
-                    <Text style={styles.rating}>{item.rating}</Text>
-                  </View>
+                </View>
+
+                <View style={styles.popularCartRight}>
+                  <Image source={item.image} style={styles.popularCartImage} />
                 </View>
               </View>
-            </View>
-            <View style={styles.popularCartRight}>
-              <Image source={item.image} style={styles.popularCartImage} />
-            </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -199,13 +226,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
     borderRadius: 20,
     shadowColor: colors.black,
-    shadowOffset:{
-      width:0,
-      height:2
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    shadowOpacity:0.05,
-    shadowRadius:10,
-    elevation:2
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   categoryItemImage: {
     width: 60,
@@ -246,13 +273,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     overflow: 'hidden',
     shadowColor: colors.black,
-    shadowOffset:{
-      width:0,
-      height:2
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    shadowOpacity:0.05,
-    shadowRadius:10,
-    elevation:2
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   popularToWrapper: {
     flexDirection: 'row',
